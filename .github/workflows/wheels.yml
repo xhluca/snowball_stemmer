@@ -1,6 +1,12 @@
-name: Build manylinux wheels
+name: Build and Publish Python Package
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main,development ]
+  pull_request:
+    branches: [ main,development ]
+  release:
+    types: [created]
 
 jobs:
   build-wheels:
@@ -11,26 +17,20 @@ jobs:
         python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39]
         manylinux-version: [manylinux2014]
 
-    services:
-      docker:
-        image: quay.io/pypa/${{ matrix.manylinux-version }}_x86_64
-        options: --user root
-
     steps:
     - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
 
-    - name: Build wheels
-      run: |
-        docker exec docker python /opt/python/${{ matrix.python-version }}/bin/python setup.py bdist_wheel -d /io/wheelhouse
+    - name: Pull Docker image
+      run: docker pull quay.io/pypa/${{ matrix.manylinux-version }}_x86_64
 
-    - name: Repair wheels
+    - name: Build and repair wheels
       run: |
-        docker exec docker auditwheel repair /io/wheelhouse/*.whl -w /io/wheelhouse/repaired
+        docker run --rm -v ${{ github.workspace }}:/io quay.io/pypa/${{ matrix.manylinux-version }}_x86_64 /bin/bash -c "
+          /opt/python/${{ matrix.python-version }}/bin/python /io/setup.py bdist_wheel -d /io/wheelhouse &&
+          auditwheel repair /io/wheelhouse/*.whl -w /io/wheelhouse/repaired
+        "
 
     - uses: actions/upload-artifact@v3
       with:
         name: wheels
         path: wheelhouse/repaired/*.whl
-
