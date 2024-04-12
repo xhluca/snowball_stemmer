@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310, cp311-cp311, cp312-cp312]
+        python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39]
         manylinux-version: [manylinux2014]
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Pull Docker image
       run: docker pull quay.io/pypa/${{ matrix.manylinux-version }}_x86_64
@@ -26,7 +28,8 @@ jobs:
     - name: Build and repair wheels
       run: |
         docker run --rm -v ${{ github.workspace }}:/io quay.io/pypa/${{ matrix.manylinux-version }}_x86_64 /bin/bash -c "
-          /opt/python/${{ matrix.python-version }}/bin/python /io/setup.py bdist_wheel -d /io/wheelhouse &&
+          cd /io &&
+          /opt/python/${{ matrix.python-version }}/bin/python setup.py bdist_wheel -d /io/wheelhouse &&
           auditwheel repair /io/wheelhouse/*.whl -w /io/wheelhouse/repaired
         "
 

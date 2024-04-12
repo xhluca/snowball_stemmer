@@ -151,7 +151,7 @@ class BootstrapCommand(Command):
             self.libstemmer_url, self.libstemmer_sha256)
 
 
-setup(name='snowball_stemmer',
+setup(name='snowball_stemmer_wheels',
       version=release_version,
       author='Richard Boulton',
       maintainer='Richard Boulton, Xing Han Lu',
