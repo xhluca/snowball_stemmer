@@ -1,6 +1,6 @@
-# `snowball_stemmer`
+# `snowball_stemmer_wheels`
 
-`snowball_stemmer` is a fork of `PyStemmer`
+`snowball_stemmer_wheels` is a fork of `PyStemmer` that provides pre-built wheels for `PyStemmer` on `manylinux` for 3.6 to 3.12.
 
 ## What is PyStemmer?
 
@@ -20,6 +20,26 @@ users to choose between the convenience of only dealing with pure Python
 code and the significantly better performance of PyStemmer.
 
 For more information, please check out the original repository: https://github.com/snowballstem/pystemmer
+
+## Installation
+
+To install `snowball_stemmer`, you can use `pip`:
+
+```bash
+pip install snowball_stemmer
+```
+
+To use inside python code:
+
+```python
+import snowball_stemmer
+
+print("All available languages: ", snowball_stemmer.algorithms())
+
+stemmer = snowball_stemmer.SnowballStemmer('english')
+stemmer.stemWord('running')
+# Output: 'run'
+```
 
 ## License
 
