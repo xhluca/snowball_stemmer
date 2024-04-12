@@ -7,8 +7,7 @@ on:
 jobs:
   
   bump-version:
-    name: Bump version and upload release to PyPI
-    needs: build-wheels
+    name: Bump version
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'created'
     permissions:
@@ -34,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     # Only run this job after the bump-version job has completed
     needs: bump-version
+    if: github.event_name == 'release' && github.event.action == 'created'
     strategy:
       matrix:
         python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310, cp311-cp311, cp312-cp312]
@@ -61,7 +61,7 @@ jobs:
         path: wheelhouse/repaired/*.whl
   
   publish-to-pypi:
-    name: Bump version and upload release to PyPI
+    name: Upload release to PyPI
     needs: build-wheels
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'created'
