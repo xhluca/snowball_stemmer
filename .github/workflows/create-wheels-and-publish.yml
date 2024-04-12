@@ -5,6 +5,30 @@ on:
     types: [created]
 
 jobs:
+  
+  bump-version:
+    name: Bump version and upload release to PyPI
+    needs: build-wheels
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'created'
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'  # Use the latest version of Python 3.x here
+
+    - name: Update version.py with release tag
+      env:
+        RELEASE_TAG: ${{ github.event.release.tag_name }}
+      run: |
+        python .github/scripts/python/update_version.py --version $RELEASE_TAG --path "src/version.txt"
+
   build-wheels:
     name: Build wheels on ${{ matrix.python-version }} for ${{ matrix.manylinux-version }}
     runs-on: ubuntu-latest
@@ -14,13 +38,6 @@ jobs:
         manylinux-version: [manylinux2014]
 
     steps:
-
-    - name: Update version.py with release tag
-      env:
-        RELEASE_TAG: ${{ github.event.release.tag_name }}
-      run: |
-        python .github/scripts/python/update_version.py --version $RELEASE_TAG --path "src/version.txt"
-
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
