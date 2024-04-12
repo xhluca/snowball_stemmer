@@ -59,10 +59,11 @@ jobs:
       with:
         python-version: '3.x'  # Use the latest version of Python 3.x here
 
-    - name: Download built wheels
+    - name: Download built wheels to dist/
       uses: actions/download-artifact@v3
       with:
         name: wheels
+        path: dist
 
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
