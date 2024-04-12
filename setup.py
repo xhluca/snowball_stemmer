@@ -26,7 +26,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-with open(f"src/version.txt") as fp:
+with open("src/version.txt") as fp:
     release_version = fp.read().strip()
 
 version_str = '2.2.0.1'
