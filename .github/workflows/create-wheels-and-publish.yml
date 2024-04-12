@@ -47,6 +47,10 @@ jobs:
       contents: read
       id-token: write
 
+    environment:
+      name: pypi
+      url: https://pypi.org/p/snowball-stemmer-wheels/
+
     steps:
     - uses: actions/checkout@v3
 
