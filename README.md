@@ -1,4 +1,4 @@
-# `snowball_stemmer_wheels`
+# `snowball-stemmer-wheels`
 
 `snowball_stemmer_wheels` is a fork of `PyStemmer` that provides pre-built wheels for `PyStemmer` on `manylinux` for 3.6 to 3.12.
 
