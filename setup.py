@@ -26,8 +26,10 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
+with open(f"src/version.txt") as fp:
+    release_version = fp.read().strip()
+
 version_str = '2.2.0.1'
-release_version = '0.1.0rc1'
 # libstemmer_c versions have 3 components but pystemmer versions may have more
 # (so we can address a pystemmer-specific issue without having to wait for the
 # next libstemmer_c release) so take the first 3 components from version_str.
