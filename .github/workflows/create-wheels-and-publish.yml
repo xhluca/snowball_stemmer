@@ -8,8 +8,6 @@ jobs:
   build-wheels:
     name: Build wheels on ${{ matrix.python-version }} for ${{ matrix.manylinux-version }}
     runs-on: ubuntu-latest
-    # Only run this job after the bump-version job has completed
-    needs: bump-version
     if: github.event_name == 'release' && github.event.action == 'created'
     strategy:
       matrix:
