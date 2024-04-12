@@ -26,8 +26,8 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-# version_str = '2.2.0.1'
-version_str = '0.1.0rc1'
+version_str = '2.2.0.1'
+release_version = '0.1.0rc1'
 # libstemmer_c versions have 3 components but pystemmer versions may have more
 # (so we can address a pystemmer-specific issue without having to wait for the
 # next libstemmer_c release) so take the first 3 components from version_str.
@@ -152,7 +152,7 @@ class BootstrapCommand(Command):
 
 
 setup(name='snowball_stemmer',
-      version=version_str,
+      version=release_version,
       author='Richard Boulton',
       maintainer='Richard Boulton, Xing Han Lu',
       url='https://github.com/xhluca/snowball_stemmer',
