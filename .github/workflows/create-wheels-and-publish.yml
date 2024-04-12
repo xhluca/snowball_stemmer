@@ -32,6 +32,8 @@ jobs:
   build-wheels:
     name: Build wheels on ${{ matrix.python-version }} for ${{ matrix.manylinux-version }}
     runs-on: ubuntu-latest
+    # Only run this job after the bump-version job has completed
+    needs: bump-version
     strategy:
       matrix:
         python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39, cp310-cp310, cp311-cp311, cp312-cp312]
