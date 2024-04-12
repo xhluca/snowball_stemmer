@@ -23,10 +23,10 @@ For more information, please check out the original repository: https://github.c
 
 ## Installation
 
-To install `snowball_stemmer`, you can use `pip`:
+To install `snowball-stemmer-wheels`, you can use `pip`:
 
 ```bash
-pip install snowball_stemmer
+pip install snowball-stemmer-wheels
 ```
 
 To use inside python code:
